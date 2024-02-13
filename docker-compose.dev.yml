@@ -41,3 +41,12 @@ services:
     command: ["go", "run", "main.go"]
     depends_on:
       - mariadb
+      - chrome
+
+  chrome:
+    image: chromedp/headless-shell:latest
+    container_name: chrome
+    environment:
+      - TZ=Asia/Seoul
+    ports:
+      - 9222:9222
