@@ -50,3 +50,4 @@ services:
       - TZ=Asia/Seoul
     ports:
       - 9222:9222
+    entrypoint: "/headless-shell/headless-shell chromedp/headless-shell --no-sandbox --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36\""
