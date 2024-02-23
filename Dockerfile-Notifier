@@ -1,0 +1,12 @@
+FROM ubuntu:latest
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y wget
+
+RUN wget https://github.com/SCH-Discord/NoticeNotifier/releases/latest/download/NoticeNotifier
+
+RUN chmod +x NoticeNotifier
+
+ENTRYPOINT ["./NoticeNotifier"]

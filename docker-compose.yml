@@ -1,0 +1,43 @@
+version: "3.0"
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb-p
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Seoul
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_NAME}
+
+  web:
+    container_name: Web-p
+    build:
+      dockerfile: Dockerfile-Web
+    environment:
+      - TZ=Asia/Seoul
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - mariadb
+    ports:
+      - "9090:8080"
+
+  notifier:
+    container_name: NoticeNotifier-p
+    build:
+      dockerfile: Dockerfile-Notifier
+    environment:
+      - TZ=Asia/Seoul
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - mariadb
+      - chrome
+
+  chrome:
+    image: chromedp/headless-shell:latest
+    container_name: chrome-p
+    environment:
+      - TZ=Asia/Seoul
+    entrypoint: "/headless-shell/headless-shell chromedp/headless-shell --no-sandbox --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36\""
