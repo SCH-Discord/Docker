@@ -21,7 +21,7 @@ services:
     depends_on:
       - mariadb
     ports:
-      - "9090:8080"
+      - "8080:8080"
 
   notifier:
     container_name: NoticeNotifier-p
