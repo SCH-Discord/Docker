@@ -9,17 +9,19 @@ services:
       - TZ=Asia/Seoul
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
       - MARIADB_DATABASE=${DB_NAME}
+    ports:
+      - "3306:3306"
 
   web:
     container_name: Web
     build:
       dockerfile: Dockerfile-Web
     environment:
-      - TZ=Asia/Seoul
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     depends_on:
       - mariadb
+      - notifier
     ports:
       - "8080:8080"
 
@@ -28,7 +30,6 @@ services:
     build:
       dockerfile: Dockerfile-Notifier
     environment:
-      - TZ=Asia/Seoul
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     depends_on:

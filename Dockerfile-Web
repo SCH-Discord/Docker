@@ -7,4 +7,6 @@ RUN apt-get update && \
 
 RUN wget https://github.com/SCH-Discord/Web/releases/latest/download/SCH_Discord.jar
 
+ENV TZ=Asia/Seoul
+
 ENTRYPOINT ["java", "-jar", "SCH_Discord.jar"]
